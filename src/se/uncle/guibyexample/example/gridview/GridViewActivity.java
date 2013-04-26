@@ -29,11 +29,9 @@ public class GridViewActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                     int position, long id) {
- 
-                // Sending image id to FullScreenActivity
                 Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
-                // passing array index
-                i.putExtra("id", position);
+                System.out.println("position : " + position);
+                i.putExtra(FullImageActivity.POSITION, position);
                 startActivity(i);
             }
         });

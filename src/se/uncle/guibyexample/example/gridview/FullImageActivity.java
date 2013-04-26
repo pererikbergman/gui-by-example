@@ -3,22 +3,17 @@ package se.uncle.guibyexample.example.gridview;
 import se.uncle.guibyexample.R;
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageSwitcher;
-import android.widget.ImageView;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.ViewSwitcher.ViewFactory;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 
-public class FullImageActivity extends Activity implements ViewFactory {
+public class FullImageActivity extends Activity {
 
-	private ImageSwitcher mImageSwitcher;
-	private int mCurrent = 0;
-
-	// Keep all Images in array
-	public Integer[] mThumbIds = { R.drawable.pic_1, R.drawable.pic_2,
+	public static final String POSITION = "position";
+	
+	private ViewPager mPager;
+	private PagerAdapter mPagerAdapter;
+	
+	public int[] mThumbIds = { R.drawable.pic_1, R.drawable.pic_2,
 			R.drawable.pic_3, R.drawable.pic_4, R.drawable.pic_5,
 			R.drawable.pic_6, R.drawable.pic_7, R.drawable.pic_8,
 			R.drawable.pic_9, R.drawable.pic_10, R.drawable.pic_11,
@@ -30,37 +25,15 @@ public class FullImageActivity extends Activity implements ViewFactory {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.full_image);
 
-		mImageSwitcher = (ImageSwitcher) findViewById(R.id.ImageSwitcher01);
-		mImageSwitcher.setFactory(this);
-		mImageSwitcher.setInAnimation(AnimationUtils.loadAnimation(this,
-				android.R.anim.slide_in_left));
-		mImageSwitcher.setOutAnimation(AnimationUtils.loadAnimation(this,
-				android.R.anim.slide_out_right));
-
-		mImageSwitcher.setImageResource(mThumbIds[mCurrent]);
-
-		mImageSwitcher.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(final View view, final MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_UP) {
-					mCurrent = ++mCurrent % mThumbIds.length;
-					mImageSwitcher.setImageResource(mThumbIds[mCurrent]);
-				}
-				return true;
-			}
-		});
-
+		Bundle extras = getIntent().getExtras();
+		if (extras == null) {
+			return;
+		}
+		int position = extras.getInt(POSITION);
+		
+        mPager = (ViewPager) findViewById(R.id.myfivepanelpager);
+        mPagerAdapter = new ViewPagerAdapter(this, mThumbIds);
+        mPager.setAdapter(mPagerAdapter);
+        mPager.setCurrentItem(position);
 	}
-
-	@Override
-	public View makeView() {
-		ImageView iView = new ImageView(this);
-		iView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-		iView.setLayoutParams(new ImageSwitcher.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-		iView.setBackgroundColor(0xFF000000);
-		return iView;
-	}
-
-	 
 }
