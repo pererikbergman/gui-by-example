@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".example.spinner.SpinnerActivity"></activity>
         <activity android:name=".example.gridview.GridViewActivity"></activity>
-        <activity android:name=".example.gridview.FullImageActivity"></activity>
+        <activity android:name=".example.gridview.FullImageActivity" android:theme="@style/FullscreenTheme" ></activity>
         <activity android:name=".example.slideout.SampleActivity"></activity>
         <activity android:name=".example.slideout.SlideoutActivity"></activity>
         <activity android:name=".example.slideout.MenuActivity"></activity>
