@@ -1,139 +1,124 @@
 package se.uncle.guibyexample.example.gridview;
 
 import se.uncle.guibyexample.R;
-import se.uncle.guibyexample.example.gridview.util.SystemUiHider;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.View.OnTouchListener;
+import android.view.Window;
 
 public class FullImageActivity extends Activity {
 
-	private static final boolean AUTO_HIDE = true;
-	private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-	private static final boolean TOGGLE_ON_CLICK = true;
-	private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
+	// Constants 
+	private static final boolean AUTO_HIDE              = false;
+	private static final int     AUTO_HIDE_DELAY_MILLIS = 3000;
+	public  static final String  POSITION               = "position";
 
-	public static final String POSITION = "position";
+	// Components
+	private ViewPager            mPager;
+	private PagerAdapter         mPagerAdapter;
 
-	private SystemUiHider mSystemUiHider;
+	// States
+	private boolean              mVisible               = true;
 
-	private ViewPager mPager;
-	private PagerAdapter mPagerAdapter;
-
-	public int[] mThumbIds = { R.drawable.pic_1, R.drawable.pic_2,
-			R.drawable.pic_3, R.drawable.pic_4, R.drawable.pic_5,
-			R.drawable.pic_6, R.drawable.pic_7, R.drawable.pic_8,
-			R.drawable.pic_9, R.drawable.pic_10, R.drawable.pic_11,
-			R.drawable.pic_12, R.drawable.pic_13, R.drawable.pic_14,
-			R.drawable.pic_15 };
-
+	// Help classes
+	private Handler              mHideHandler           = new Handler();
+	private Runnable             mUIHider               = new UIHider();
+	private OnTouchListener      mUIFlipper             = new UIFliper();
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		setContentView(R.layout.fullscreen);
 
-		// Get the starting position.
+		// Get the start index
+		int position = 0;
 		Bundle extras = getIntent().getExtras();
-		if (extras == null) {
-			return;
+		if (extras != null) {
+			position = extras.getInt(POSITION, 0);
 		}
-		int position = extras.getInt(POSITION);
-
-		// Set up the pager view.
+		
+		// Setup the ViewPager.
 		mPager = (ViewPager) findViewById(R.id.myfivepanelpager);
-		mPagerAdapter = new ViewPagerAdapter(this, mThumbIds);
+		mPagerAdapter = new ViewPagerAdapter(this);
 		mPager.setAdapter(mPagerAdapter);
 		mPager.setCurrentItem(position);
 
-		// Setting up the 'back' button.
-		Button back = (Button) findViewById(R.id.back);
-		back.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				int idx = (mPager.getCurrentItem() - 1) % mThumbIds.length;
-				mPager.setCurrentItem(idx);
-			}
-		});
-		back.setOnTouchListener(mDelayHideTouchListener);
-
-		// Setting up the 'next' button.
-		Button next = (Button) findViewById(R.id.next);
-		next.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				int idx = (mPager.getCurrentItem() + 1) % mThumbIds.length;
-				mPager.setCurrentItem(idx);
-			}
-		});
-		next.setOnTouchListener(mDelayHideTouchListener);
-
-		// Setting up the 'home' button.
-		Button home = (Button) findViewById(R.id.home);
-		home.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				FullImageActivity.this.finish();
-			}
-		});
-		home.setOnTouchListener(mDelayHideTouchListener);
-
-		final View controlsView = findViewById(R.id.fullscreen_content_controls);
-		mSystemUiHider = SystemUiHider.getInstance(this, mPager, HIDER_FLAGS);
-		mSystemUiHider.setup();
-		mSystemUiHider.setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
-					@Override
-					public void onVisibilityChange(boolean visible) {
-						controlsView.setVisibility(visible ? View.VISIBLE : View.GONE);
-						if (visible && AUTO_HIDE) {
-							delayedHide(AUTO_HIDE_DELAY_MILLIS);
-						}
-					}
-				});
-
-		mPager.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (TOGGLE_ON_CLICK) {
-					mSystemUiHider.toggle();
-				} else {
-					mSystemUiHider.show();
-				}
-			}
-		});
+		// Add the UI Flipper.
+		mPager.setOnTouchListener(mUIFlipper);
 	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		delayedHide(100);
+		if (AUTO_HIDE) {
+			delayedHide(AUTO_HIDE_DELAY_MILLIS);
+		}
 	}
 
-	View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return true;
+	}
+
+	private void toggle() {
+		if (mVisible) {
+			hide();
+		} else {
+			show();
+		}
+	}
+
+	private void hide() {
+		FullImageActivity.this.getActionBar().hide();
+		mVisible = false;
+	}
+
+	private void show() {
+		FullImageActivity.this.getActionBar().show();
+		mVisible = true;
+
+		if (AUTO_HIDE) {
+			delayedHide(AUTO_HIDE_DELAY_MILLIS);
+		}
+	}
+
+	private void delayedHide(int delayMillis) {
+		mHideHandler.removeCallbacks(mUIHider);
+		mHideHandler.postDelayed(mUIHider, delayMillis);
+	}
+
+	/** Help Classes **/
+	
+	private final class UIFliper implements View.OnTouchListener {
+		private float mOldX;
+
 		@Override
 		public boolean onTouch(View view, MotionEvent motionEvent) {
-			if (AUTO_HIDE) {
-				delayedHide(AUTO_HIDE_DELAY_MILLIS);
+			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+				mOldX = motionEvent.getX();
+			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+				if (Math.abs(mOldX - motionEvent.getX()) < 10) {
+					toggle();
+				}
 			}
 			return false;
 		}
-	};
-
-	Handler mHideHandler = new Handler();
-	Runnable mHideRunnable = new Runnable() {
+	}
+	
+	private final class UIHider implements Runnable {
 		@Override
 		public void run() {
-			mSystemUiHider.hide();
+			hide();
 		}
-	};
-
-	private void delayedHide(int delayMillis) {
-		mHideHandler.removeCallbacks(mHideRunnable);
-		mHideHandler.postDelayed(mHideRunnable, delayMillis);
 	}
 }

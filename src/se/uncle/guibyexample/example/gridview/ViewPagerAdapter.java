@@ -1,5 +1,6 @@
 package se.uncle.guibyexample.example.gridview;
 
+import se.uncle.guibyexample.R;
 import android.app.Activity;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
@@ -10,13 +11,18 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 public class ViewPagerAdapter extends PagerAdapter {
+	
+	private int imageArray[] = { R.drawable.pic_1, R.drawable.pic_2,
+			R.drawable.pic_3, R.drawable.pic_4, R.drawable.pic_5,
+			R.drawable.pic_6, R.drawable.pic_7, R.drawable.pic_8,
+			R.drawable.pic_9, R.drawable.pic_10, R.drawable.pic_11,
+			R.drawable.pic_12, R.drawable.pic_13, R.drawable.pic_14,
+			R.drawable.pic_15 };
 
-	Activity activity;
-	int imageArray[];
-
-	public ViewPagerAdapter(Activity act, int[] imgArra) {
-		imageArray = imgArra;
-		activity = act;
+	private Activity mActivity;
+	
+	public ViewPagerAdapter(Activity act) {
+		mActivity = act;
 	}
 
 	public int getCount() {
@@ -24,7 +30,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 	}
 
 	public Object instantiateItem(View collection, int position) {
-		ImageView view = new ImageView(activity);
+		ImageView view = new ImageView(mActivity);
 		view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT));
 		view.setScaleType(ScaleType.FIT_XY);

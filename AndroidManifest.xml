@@ -5,14 +5,14 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="16"
+        android:minSdkVersion="14"
         android:targetSdkVersion="17" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" android:uiOptions="splitActionBarWhenNarrow" >
         <activity
             android:name="se.uncle.guibyexample.MainActivity"
             android:label="@string/app_name" >
@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".example.spinner.SpinnerActivity"></activity>
         <activity android:name=".example.gridview.GridViewActivity"></activity>
-        <activity android:name=".example.gridview.FullImageActivity" android:theme="@style/FullscreenTheme" ></activity>
+        <activity android:name=".example.gridview.FullImageActivity" ></activity>
         <activity android:name=".example.slideout.SampleActivity"></activity>
         <activity android:name=".example.slideout.SlideoutActivity"></activity>
         <activity android:name=".example.slideout.MenuActivity"></activity>
