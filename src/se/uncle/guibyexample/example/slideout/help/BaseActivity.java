@@ -10,7 +10,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
-public class BaseActivity extends SlidingFragmentActivity {
+public abstract class BaseActivity extends SlidingFragmentActivity {
 
 	private int mTitleRes;
 	protected ListFragment mFrag;
@@ -29,7 +29,7 @@ public class BaseActivity extends SlidingFragmentActivity {
 		setBehindContentView(R.layout.slideout_menu);
 		if (savedInstanceState == null) {
 			FragmentTransaction t = this.getSupportFragmentManager().beginTransaction();
-			mFrag = new SampleListFragment();
+			mFrag = getSlideInMenu(); 
 			t.replace(R.id.menu_frame, mFrag);
 			t.commit();
 		} else {
@@ -47,6 +47,8 @@ public class BaseActivity extends SlidingFragmentActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
+	public abstract ListFragment getSlideInMenu();
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

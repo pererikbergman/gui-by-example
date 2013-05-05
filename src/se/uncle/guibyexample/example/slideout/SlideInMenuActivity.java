@@ -3,7 +3,9 @@ package se.uncle.guibyexample.example.slideout;
 import se.uncle.guibyexample.R;
 import se.uncle.guibyexample.example.slideout.help.BaseActivity;
 import se.uncle.guibyexample.example.slideout.help.SampleListFragment;
+import se.uncle.guibyexample.example.slideout.help.TestFragment;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 
 public class SlideInMenuActivity extends BaseActivity {
 
@@ -19,10 +21,15 @@ public class SlideInMenuActivity extends BaseActivity {
 		setContentView(R.layout.slidein_content_frame);
 		getSupportFragmentManager()
 		.beginTransaction()
-		.replace(R.id.content_frame, new SampleListFragment())
+		.replace(R.id.content_frame, new TestFragment())
 		.commit();
 		
 		setSlidingActionBarEnabled(true);
+	}
+
+	@Override
+	public ListFragment getSlideInMenu() {
+		return new SampleListFragment();
 	}
 
 }
