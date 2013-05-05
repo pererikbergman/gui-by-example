@@ -1,11 +1,14 @@
 package se.uncle.guibyexample.example.gridview;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import se.uncle.guibyexample.R;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
@@ -55,7 +58,10 @@ public class FullImageActivity extends SherlockActivity {
 
 		// Add the UI Flipper.
 		mPager.setOnTouchListener(mUIFlipper);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#99000000")));
+		actionBar.setSplitBackgroundDrawable(new ColorDrawable(Color.parseColor("#99000000")));
 	}
 
 	@Override

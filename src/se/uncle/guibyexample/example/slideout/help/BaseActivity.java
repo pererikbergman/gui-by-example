@@ -1,10 +1,13 @@
 package se.uncle.guibyexample.example.slideout.help;
 
 import se.uncle.guibyexample.R;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
@@ -44,7 +47,10 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
 		sm.setFadeDegree(0.35f);
 		sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#99000000")));
+		actionBar.setSplitBackgroundDrawable(new ColorDrawable(Color.parseColor("#99000000")));
 	}
 
 	public abstract ListFragment getSlideInMenu();
