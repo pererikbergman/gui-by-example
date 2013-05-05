@@ -3,6 +3,7 @@ package se.uncle.guibyexample.example.gridview;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 import se.uncle.guibyexample.R;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ public class FullImageActivity extends SherlockActivity {
 
 		// Add the UI Flipper.
 		mPager.setOnTouchListener(mUIFlipper);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -71,6 +73,16 @@ public class FullImageActivity extends SherlockActivity {
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
 	private void toggle() {
 		if (mVisible) {
 			hide();

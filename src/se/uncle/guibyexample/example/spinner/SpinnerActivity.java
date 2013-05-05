@@ -3,7 +3,6 @@ package se.uncle.guibyexample.example.spinner;
 import java.util.ArrayList;
 
 import se.uncle.guibyexample.R;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class SpinnerActivity extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
+public class SpinnerActivity extends SherlockActivity {
 	private Spinner spinner;
 	final ArrayList<String> spinnerArray = new ArrayList<String>();
 
@@ -64,6 +66,17 @@ public class SpinnerActivity extends Activity {
 
 		};
 		spinner.setAdapter(spinnerArrayAdapter);
+		
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }
