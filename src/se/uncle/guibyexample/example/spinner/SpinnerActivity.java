@@ -20,14 +20,14 @@ public class SpinnerActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_spinner);
+		setContentView(R.layout.spinner_activity);
 
 		spinnerArray.add("A1");
 		spinnerArray.add("A2");
 		spinnerArray.add("A3");
 		spinnerArray.add("A4");
 		spinnerArray.add("A5");
-		spinner = (Spinner) findViewById(R.id.spinner1);
+		spinner = (Spinner) findViewById(R.id.spinner);
 
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
 				this, R.layout.spinner_item, spinnerArray) {
@@ -44,10 +44,6 @@ public class SpinnerActivity extends Activity {
 				contactName.setText(spinnerArray.get(position));
 				contactImage.setImageResource(R.drawable.ic_launcher);
 				return spinnerEntry;
-
-//				ImageView iv = new ImageView(SpinnerActivity.this);
-//				iv.setImageResource(R.drawable.ic_launcher);
-//				return iv;
 			}
 
 			@Override

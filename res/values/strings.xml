@@ -4,9 +4,9 @@
     <string name="app_name">GUI By Example</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
     <string name="country_prompt">Choose a country</string>
- 
+    <string name="title_bar_slide">Sliding Title Bar</string>
+
     <string-array name="country_arrays">
         <item>Malaysia</item>
         <item>United States</item>
@@ -17,4 +17,5 @@
         <item>New Zealand</item>
         <item>India</item>
     </string-array>
+
 </resources>

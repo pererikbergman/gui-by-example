@@ -9,34 +9,23 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
  
 public class GridViewActivity extends Activity {
- 
- 
- 
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gridview);
+        setContentView(R.layout.grid_view_activity);
  
         GridView gridView = (GridView) findViewById(R.id.grid_view);
- 
-        // Instance of ImageAdapter Class
         gridView.setAdapter(new ImageAdapter(this));
  
-        /**
-         * On Click event for Single Gridview Item
-         * */
         gridView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                     int position, long id) {
                 Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
-                System.out.println("position : " + position);
                 i.putExtra(FullImageActivity.POSITION, position);
                 startActivity(i);
             }
         });
-        
- 
 	}
- 
 }

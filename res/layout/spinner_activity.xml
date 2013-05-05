@@ -5,11 +5,12 @@
     android:orientation="vertical" >
 
     <Spinner
-        android:id="@+id/spinner1"
+        android:id="@+id/spinner"
         android:layout_width="124dip"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dip"
         android:entries="@array/country_arrays"
         android:prompt="@string/country_prompt" />
+    
 </RelativeLayout>

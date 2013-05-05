@@ -1,19 +1,20 @@
 package se.uncle.guibyexample.example.gridview;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+
 import se.uncle.guibyexample.R;
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.Window;
 
-public class FullImageActivity extends Activity {
+public class FullImageActivity extends SherlockActivity {
 
 	// Constants 
 	private static final boolean AUTO_HIDE              = false;
@@ -36,7 +37,7 @@ public class FullImageActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-		setContentView(R.layout.fullscreen);
+		setContentView(R.layout.full_image_activity);
 
 		// Get the start index
 		int position = 0;
@@ -46,7 +47,7 @@ public class FullImageActivity extends Activity {
 		}
 		
 		// Setup the ViewPager.
-		mPager = (ViewPager) findViewById(R.id.myfivepanelpager);
+		mPager = (ViewPager) findViewById(R.id.imagepager);
 		mPagerAdapter = new ViewPagerAdapter(this);
 		mPager.setAdapter(mPagerAdapter);
 		mPager.setCurrentItem(position);
@@ -62,10 +63,10 @@ public class FullImageActivity extends Activity {
 			delayedHide(AUTO_HIDE_DELAY_MILLIS);
 		}
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.main, menu);
 		return true;
 	}
@@ -79,12 +80,12 @@ public class FullImageActivity extends Activity {
 	}
 
 	private void hide() {
-		FullImageActivity.this.getActionBar().hide();
+		FullImageActivity.this.getSupportActionBar().hide();
 		mVisible = false;
 	}
 
 	private void show() {
-		FullImageActivity.this.getActionBar().show();
+		FullImageActivity.this.getSupportActionBar().show();
 		mVisible = true;
 
 		if (AUTO_HIDE) {

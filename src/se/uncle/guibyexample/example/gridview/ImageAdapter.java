@@ -22,7 +22,6 @@ public class ImageAdapter extends BaseAdapter {
             R.drawable.pic_15
     };
  
-    // Constructor
     public ImageAdapter(Context c){
         mContext = c;
     }
