@@ -16,23 +16,23 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 public class SpinnerActivity extends SherlockActivity {
-	private Spinner spinner;
-	final ArrayList<String> spinnerArray = new ArrayList<String>();
+	private Spinner mSpinner;
+	private final ArrayList<String> mSpinnerArray = new ArrayList<String>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.spinner_activity);
 
-		spinnerArray.add("A1");
-		spinnerArray.add("A2");
-		spinnerArray.add("A3");
-		spinnerArray.add("A4");
-		spinnerArray.add("A5");
-		spinner = (Spinner) findViewById(R.id.spinner);
+		mSpinnerArray.add("A1");
+		mSpinnerArray.add("A2");
+		mSpinnerArray.add("A3");
+		mSpinnerArray.add("A4");
+		mSpinnerArray.add("A5");
+		mSpinner = (Spinner) findViewById(R.id.spinner);
 
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-				this, R.layout.spinner_item, spinnerArray) {
+				this, R.layout.spinner_item, mSpinnerArray) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				final LayoutInflater inflater = SpinnerActivity.this.getLayoutInflater();
@@ -43,7 +43,7 @@ public class SpinnerActivity extends SherlockActivity {
 				final ImageView contactImage = (ImageView) spinnerEntry
 						.findViewById(R.id.image);
 				
-				contactName.setText(spinnerArray.get(position));
+				contactName.setText(mSpinnerArray.get(position));
 				contactImage.setImageResource(R.drawable.ic_launcher);
 				return spinnerEntry;
 			}
@@ -59,13 +59,13 @@ public class SpinnerActivity extends SherlockActivity {
 				final ImageView contactImage = (ImageView) spinnerEntry
 						.findViewById(R.id.image);
 				
-				contactName.setText(spinnerArray.get(position));
+				contactName.setText(mSpinnerArray.get(position));
 				contactImage.setImageResource(R.drawable.ic_launcher);
 				return spinnerEntry;
 			}
 
 		};
-		spinner.setAdapter(spinnerArrayAdapter);
+		mSpinner.setAdapter(spinnerArrayAdapter);
 		
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
