@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         android:uiOptions="splitActionBarWhenNarrow" >
         <activity
-            android:name="se.uncle.guibyexample.MainActivity"
+            android:name="se.uncle.guibyexample.GUIByExample"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

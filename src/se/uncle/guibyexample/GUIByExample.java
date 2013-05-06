@@ -6,7 +6,7 @@ import se.uncle.guibyexample.example.spinner.SpinnerActivity;
 import android.os.Bundle;
 
 
-public class MainActivity extends ActivityListStarter {
+public class GUIByExample extends ActivityListStarter {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
